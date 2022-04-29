@@ -6,37 +6,85 @@
         <style src= ""></style>
     </head>
     <style>
-        body{
-            text-align: center;
-            height: 300 px;
-            width: 300 px;
+        
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 50px;
+            font-family: serif,"Times New Roman", Times;
         }
-        .border {
+        .outsideBox {
             display: flex;
             flex-direction: column;
-            padding: 2px;
-            
+            align-items: center; 
+            justify-content: center; 
+            background-color: #04d3ee;
+            color: #333333;
+            width: 300px;
+            height: 300px;
+            border-radius: 10px;
+            border-color: black;
+            border-style: solid;
+            padding: 15px;
+        }
+        .borderScore {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: solid;
+            height: 90px;
+            width: 150px;
+            padding: 8px;
+            border-radius: 8px;
+            border-color: chartreuse;
+            background-color: rgb(86, 207, 201);
         }
         .buttons{
-           
-            
+            display: flex;
+            font-size: "Arial";
+        }
+        button{
+            width: 65px;
+            height: 25px;
+            border-radius: 5px;
+            margin: 7px;
+            text-align: center;
+            background-color:  hsl(49, 88%, 60%);
+            border-color: yellow;
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+            font-weight: bold;
+        }
+
+        h2{
+            margin: 0px;
+            height: 5px;
+            padding-bottom: 25px;
+        }
+        .borderScore p {
+            margin: 2px;
+            text-align: center;
         }
     </style>
     <body>
+        <div class="outsideBox">
 
-        <div class = 'buttons'>
-            <h1>Choose your play</h1>
-            <button id = 'scissors'>Scissors</button>
-            <button id = 'rock'>Rock</button>
-            <button id = 'paper'>paper</button>
+            <h1>Choose Your Play</h1>
+
+            <div class = 'buttons'>
+                <button id = 'scissors'>Scissors</button>
+                <button id = 'rock'>Rock</button>
+                <button id = 'paper'>Paper</button>
+            </div>
+
+            <div class = 'borderScore'>
+                <h2>Score</h2>
+                <p> You x Machine </p>
+                <p id = 'score'> 0 x 0 </p>
+            </div>
+
         </div>
-
-        <div class = 'border'>
-            <h2>Score</h2>
-            <p> You x Machine </p>
-            <p id = 'score'> 0 x 0 </p>
-        </div>
-
     </body>
 
 
@@ -107,43 +155,45 @@
             return message;
         }
         
+        //Gets the user choice of play and call the computer play and round play functions
+        //it displays the user scores and tells when the game has ended
+
         let button = document.querySelector('.buttons');
         let score = document.querySelector('#score');
         let countRounds = 0;
         let userWins = 0;
         let machineWins = 0;
 
-        button.addEventListener('click', function getUserChoice(event) {
+        function getUserChoice(event) {
            
-            if (countRounds < 5){
-                let userChoice = event.target.id;
-                let response = playRound(userChoice,computerPlay());
-                if (response ===2){
-                    userWins++;
-                    score.textContent = `${userWins} x ${machineWins}`;
-                }
-                else if (response === 1) {
-                    machineWins++;
-                    score.textContent = `${userWins} x ${machineWins}`;
-                    
-                }
-                else if (response === 0) {
-                    score.innerHTML=`${userWins} x ${machineWins} <br> Draw!`
-                }
-                countRounds++;
-            }
+           if (countRounds < 5){
+               let userChoice = event.target.id;
+               let response = playRound(userChoice,computerPlay());
+               if (response ===2){
+                   userWins++;
+                   score.textContent = `${userWins} x ${machineWins}`;
+               }
+               else if (response === 1) {
+                   machineWins++;
+                   score.textContent = `${userWins} x ${machineWins}`;
+                   
+               }
+               else if (response === 0) {
+                   score.innerHTML=`${userWins} x ${machineWins} <br> Draw!`
+               }
+               countRounds++;
+           }
 
-            if (countRounds ==5) {
-                score.innerHTML='<br>'
-                score.innerHTML=`${userWins} x ${machineWins} <br> End of Game!
-                                                                Click again to play!`;
-                countRounds=0;
-                userWins=0;
-                machineWins=0;
-            }
-            
-
-
-        });
+           if (countRounds ==5) {
+               score.innerHTML='<br>'
+               score.innerHTML=`${userWins} x ${machineWins} <br> End of Game!
+                                                               Click again to play!`;
+               countRounds=0;
+               userWins=0;
+               machineWins=0;
+           }
+           
+       }
+        button.addEventListener('click', getUserChoice);
     </script>
 </html> 
